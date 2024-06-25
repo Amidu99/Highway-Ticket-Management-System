@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import java.util.List;
 import java.util.regex.Pattern;
 
 @RestController
@@ -37,6 +38,25 @@ public class UserController {
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
+    }
+
+    @GetMapping("/get")
+    public ResponseEntity<?> getOneUser(@RequestHeader String email) {
+        boolean isExists = userService.existsByEmail(email);
+        if (!isExists){
+            logger.info(email + " : User does not exist.");
+            return ResponseEntity.noContent().build();
+        }
+        UserDTO userDTO = userService.getUserByEmail(email);
+        return ResponseEntity.ok(userDTO);
+    }
+
+    @GetMapping("/getAll")
+    public ResponseEntity<?> getAllUsers() {
+        List<UserDTO> allUsers = userService.getAllUsers();
+        logger.info("No of all users: "+allUsers.size());
+        if (allUsers.size() == 0) return ResponseEntity.noContent().build();
+        return ResponseEntity.ok().body(allUsers);
     }
 
     private void validateUser(UserDTO userDTO) {

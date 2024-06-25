@@ -6,6 +6,7 @@ import lk.ijse.user_service.service.UserService;
 import lk.ijse.user_service.util.Mapping;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -21,5 +22,15 @@ public class UserServiceIMPL implements UserService {
     @Override
     public void saveUser(UserDTO userDTO) {
         repo.save(mapping.toUserEntity(userDTO));
+    }
+
+    @Override
+    public UserDTO getUserByEmail(String email) {
+        return mapping.toUserDTO(repo.getUserByEmail(email));
+    }
+
+    @Override
+    public List<UserDTO> getAllUsers() {
+        return mapping.toUserDTOList(repo.findAll());
     }
 }
