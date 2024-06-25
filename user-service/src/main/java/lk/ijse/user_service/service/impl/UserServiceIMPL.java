@@ -1,6 +1,7 @@
 package lk.ijse.user_service.service.impl;
 
 import lk.ijse.user_service.dto.UserDTO;
+import lk.ijse.user_service.model.User;
 import lk.ijse.user_service.repo.UserRepo;
 import lk.ijse.user_service.service.UserService;
 import lk.ijse.user_service.util.Mapping;
@@ -32,5 +33,15 @@ public class UserServiceIMPL implements UserService {
     @Override
     public List<UserDTO> getAllUsers() {
         return mapping.toUserDTOList(repo.findAll());
+    }
+
+    @Override
+    public void updateUser(UserDTO userDTO) {
+        User existingUser = repo.getUserByEmail(userDTO.getEmail());
+        existingUser.setName(userDTO.getName());
+        existingUser.setAddress(userDTO.getAddress());
+        existingUser.setPhone(userDTO.getPhone());
+        existingUser.setPassword(userDTO.getPassword());
+        repo.save(existingUser);
     }
 }

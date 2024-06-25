@@ -59,6 +59,23 @@ public class UserController {
         return ResponseEntity.ok().body(allUsers);
     }
 
+    @PutMapping("/update")
+    public ResponseEntity<?> updateUser(@RequestBody UserDTO userDTO) {
+        try {
+            validateUser(userDTO);
+            boolean isExists = userService.existsByEmail(userDTO.getEmail());
+            if (!isExists) {
+                logger.info(userDTO.getEmail() + " : User does not exist.");
+                return ResponseEntity.noContent().build();
+            }
+            userService.updateUser(userDTO);
+            logger.info(userDTO.getEmail()+" : User updated.");
+            return ResponseEntity.ok().body(userDTO.getEmail()+" : User updated.");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
     private void validateUser(UserDTO userDTO) {
         if (!Pattern.compile("^[A-Za-z\\s]{3,}$").matcher(userDTO.getName()).matches()) {
             throw new RuntimeException("Invalid Name.");

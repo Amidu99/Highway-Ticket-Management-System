@@ -8,4 +8,5 @@ public interface UserService {
     void saveUser(UserDTO userDTO);
     UserDTO getUserByEmail(String email);
     List<UserDTO> getAllUsers();
+    void updateUser(UserDTO userDTO);
 }
