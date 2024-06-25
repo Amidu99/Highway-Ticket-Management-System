@@ -44,4 +44,9 @@ public class UserServiceIMPL implements UserService {
         existingUser.setPassword(userDTO.getPassword());
         repo.save(existingUser);
     }
+
+    @Override
+    public void deleteUserByEmail(String email) {
+        repo.deleteByEmail(email);
+    }
 }

@@ -76,6 +76,17 @@ public class UserController {
         }
     }
 
+    @DeleteMapping("/delete")
+    public ResponseEntity<?> deleteUser(@RequestHeader String email) {
+        boolean isExists = userService.existsByEmail(email);
+        if (!isExists){
+            logger.info(email + " : User does not exist.");
+            return ResponseEntity.noContent().build();
+        }
+        userService.deleteUserByEmail(email);
+        return ResponseEntity.ok().body(email+" : user deleted.");
+    }
+
     private void validateUser(UserDTO userDTO) {
         if (!Pattern.compile("^[A-Za-z\\s]{3,}$").matcher(userDTO.getName()).matches()) {
             throw new RuntimeException("Invalid Name.");
