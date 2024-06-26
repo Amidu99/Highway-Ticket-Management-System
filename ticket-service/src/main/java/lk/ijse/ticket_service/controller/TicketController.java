@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
+import java.util.List;
 import java.util.regex.Pattern;
 
 @RestController
@@ -39,6 +40,25 @@ public class TicketController {
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
+    }
+
+    @GetMapping("/get/{ticketNo}")
+    public ResponseEntity<?> getOneTicket(@PathVariable String ticketNo) {
+        boolean isExists = ticketService.existsByTicketNo(ticketNo);
+        if (!isExists){
+            logger.info(ticketNo + " : Ticket does not exist.");
+            return ResponseEntity.noContent().build();
+        }
+        TicketDTO ticketDTO = ticketService.getTicketByTicketNo(ticketNo);
+        return ResponseEntity.ok(ticketDTO);
+    }
+
+    @GetMapping("/getAll")
+    public ResponseEntity<?> getAllTickets() {
+        List<TicketDTO> allTickets = ticketService.getAllTickets();
+        logger.info("No of all tickets: "+allTickets.size());
+        if (allTickets.size() == 0) return ResponseEntity.noContent().build();
+        return ResponseEntity.ok().body(allTickets);
     }
 
     private void validateTicket(TicketDTO ticketDTO) {

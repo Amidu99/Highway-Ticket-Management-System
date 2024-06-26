@@ -5,4 +5,5 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 
 public interface TicketRepo extends MongoRepository<Ticket, String> {
     boolean existsByTicketNo(String ticketNo);
+    Ticket getTicketByTicketNo(String ticketNo);
 }
