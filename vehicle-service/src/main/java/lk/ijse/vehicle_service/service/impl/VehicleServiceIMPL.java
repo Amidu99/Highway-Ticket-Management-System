@@ -43,4 +43,9 @@ public class VehicleServiceIMPL implements VehicleService {
         existingVehicle.setModel(vehicleDTO.getModel());
         repo.save(existingVehicle);
     }
+
+    @Override
+    public void deleteVehicleByVehicleNo(String vehicleNo) {
+        repo.deleteVehicleByVehicleNo(vehicleNo);
+    }
 }

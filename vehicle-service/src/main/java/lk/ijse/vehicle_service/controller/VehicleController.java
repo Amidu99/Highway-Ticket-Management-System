@@ -79,6 +79,18 @@ public class VehicleController {
         }
     }
 
+    @DeleteMapping("/delete/{vehicleNo}")
+    public ResponseEntity<?> deleteVehicle(@PathVariable String vehicleNo) {
+        boolean isExists = vehicleService.existsByVehicleNo(vehicleNo);
+        if (!isExists){
+            logger.info(vehicleNo + " : Vehicle does not exist.");
+            return ResponseEntity.noContent().build();
+        }
+        vehicleService.deleteVehicleByVehicleNo(vehicleNo);
+        logger.info(vehicleNo+" : Vehicle deleted.");
+        return ResponseEntity.ok().body(vehicleNo+" : Vehicle deleted.");
+    }
+
     private void validateVehicle(VehicleDTO vehicleDTO) {
         if (!Pattern.compile("^[A-Za-z\\s]{3,}$").matcher(vehicleDTO.getMake()).matches()) {
             throw new RuntimeException("Invalid Make.");
