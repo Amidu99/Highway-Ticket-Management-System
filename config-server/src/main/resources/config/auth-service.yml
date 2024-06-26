@@ -1,0 +1,19 @@
+server:
+  port: 8085
+
+spring:
+  application:
+    name: auth-service
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/htms-userservice
+
+jwt:
+  token: 3t9Ekl5jyXp2RbFgQzWu8h6o0PdVaNx7ZsGcB1qMv4iYrHwD
+
+eureka:
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
