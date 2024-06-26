@@ -62,6 +62,23 @@ public class VehicleController {
         return ResponseEntity.ok().body(allVehicles);
     }
 
+    @PutMapping("/update")
+    public ResponseEntity<?> updateVehicle(@RequestBody VehicleDTO vehicleDTO) {
+        try {
+            validateVehicle(vehicleDTO);
+            boolean isExists = vehicleService.existsByVehicleNo(vehicleDTO.getVehicleNo());
+            if (!isExists) {
+                logger.info(vehicleDTO.getVehicleNo() + " : Vehicle does not exist.");
+                return ResponseEntity.noContent().build();
+            }
+            vehicleService.updateVehicle(vehicleDTO);
+            logger.info(vehicleDTO.getVehicleNo()+" : Vehicle updated.");
+            return ResponseEntity.ok().body(vehicleDTO.getVehicleNo()+" : Vehicle updated.");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
     private void validateVehicle(VehicleDTO vehicleDTO) {
         if (!Pattern.compile("^[A-Za-z\\s]{3,}$").matcher(vehicleDTO.getMake()).matches()) {
             throw new RuntimeException("Invalid Make.");

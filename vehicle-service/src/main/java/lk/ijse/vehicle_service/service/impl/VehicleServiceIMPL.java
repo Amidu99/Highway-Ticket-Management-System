@@ -1,6 +1,7 @@
 package lk.ijse.vehicle_service.service.impl;
 
 import lk.ijse.vehicle_service.dto.VehicleDTO;
+import lk.ijse.vehicle_service.model.Vehicle;
 import lk.ijse.vehicle_service.repo.VehicleRepo;
 import lk.ijse.vehicle_service.service.VehicleService;
 import lk.ijse.vehicle_service.util.Mapping;
@@ -32,5 +33,14 @@ public class VehicleServiceIMPL implements VehicleService {
     @Override
     public List<VehicleDTO> getAllVehicles() {
         return mapping.toVehicleDTOList(repo.findAll());
+    }
+
+    @Override
+    public void updateVehicle(VehicleDTO vehicleDTO) {
+        Vehicle existingVehicle = repo.getVehicleByVehicleNo(vehicleDTO.getVehicleNo());
+        existingVehicle.setMake(vehicleDTO.getMake());
+        existingVehicle.setType(vehicleDTO.getType());
+        existingVehicle.setModel(vehicleDTO.getModel());
+        repo.save(existingVehicle);
     }
 }
