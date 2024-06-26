@@ -9,6 +9,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
+
+import java.util.List;
 import java.util.regex.Pattern;
 
 @RestController
@@ -39,6 +41,25 @@ public class VehicleController {
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
+    }
+
+    @GetMapping("/get/{vehicleNo}")
+    public ResponseEntity<?> getOneVehicle(@PathVariable String vehicleNo) {
+        boolean isExists = vehicleService.existsByVehicleNo(vehicleNo);
+        if (!isExists){
+            logger.info(vehicleNo + " : Vehicle does not exist.");
+            return ResponseEntity.noContent().build();
+        }
+        VehicleDTO vehicleDTO = vehicleService.getVehicleByVehicleNo(vehicleNo);
+        return ResponseEntity.ok(vehicleDTO);
+    }
+
+    @GetMapping("/getAll")
+    public ResponseEntity<?> getAllVehicles() {
+        List<VehicleDTO> allVehicles = vehicleService.getAllVehicles();
+        logger.info("No of all vehicles: "+allVehicles.size());
+        if (allVehicles.size() == 0) return ResponseEntity.noContent().build();
+        return ResponseEntity.ok().body(allVehicles);
     }
 
     private void validateVehicle(VehicleDTO vehicleDTO) {

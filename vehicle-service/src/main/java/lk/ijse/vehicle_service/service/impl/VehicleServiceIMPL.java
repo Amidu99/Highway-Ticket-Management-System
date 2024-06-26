@@ -6,6 +6,7 @@ import lk.ijse.vehicle_service.service.VehicleService;
 import lk.ijse.vehicle_service.util.Mapping;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -21,5 +22,15 @@ public class VehicleServiceIMPL implements VehicleService {
     @Override
     public void saveVehicle(VehicleDTO vehicleDTO) {
         repo.save(mapping.toVehicleEntity(vehicleDTO));
+    }
+
+    @Override
+    public VehicleDTO getVehicleByVehicleNo(String vehicleNo) {
+        return mapping.toVehicleDTO(repo.getVehicleByVehicleNo(vehicleNo));
+    }
+
+    @Override
+    public List<VehicleDTO> getAllVehicles() {
+        return mapping.toVehicleDTOList(repo.findAll());
     }
 }
