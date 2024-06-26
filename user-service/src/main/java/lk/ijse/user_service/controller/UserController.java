@@ -84,6 +84,7 @@ public class UserController {
             return ResponseEntity.noContent().build();
         }
         userService.deleteUserByEmail(email);
+        logger.info(email+" : user deleted.");
         return ResponseEntity.ok().body(email+" : user deleted.");
     }
 
