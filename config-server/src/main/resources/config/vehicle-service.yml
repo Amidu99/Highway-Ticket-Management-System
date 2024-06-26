@@ -1,8 +1,13 @@
 server:
   port: 8082
+
 spring:
   application:
     name: vehicle-service
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/htms-vehicleservice
+
 eureka:
   client:
     fetch-registry: true

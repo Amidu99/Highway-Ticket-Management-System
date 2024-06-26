@@ -1,8 +1,13 @@
 server:
   port: 8083
+
 spring:
   application:
     name: ticket-service
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/htms-ticketservice
+
 eureka:
   client:
     fetch-registry: true

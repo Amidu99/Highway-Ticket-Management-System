@@ -1,8 +1,13 @@
 server:
   port: 8084
+
 spring:
   application:
     name: payment-service
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/htms-paymentservice
+
 eureka:
   client:
     fetch-registry: true
