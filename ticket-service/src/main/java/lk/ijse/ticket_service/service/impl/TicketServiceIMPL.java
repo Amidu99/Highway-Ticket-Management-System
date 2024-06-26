@@ -1,6 +1,7 @@
 package lk.ijse.ticket_service.service.impl;
 
 import lk.ijse.ticket_service.dto.TicketDTO;
+import lk.ijse.ticket_service.model.Ticket;
 import lk.ijse.ticket_service.repo.TicketRepo;
 import lk.ijse.ticket_service.service.TicketService;
 import lk.ijse.ticket_service.util.Mapping;
@@ -32,5 +33,12 @@ public class TicketServiceIMPL implements TicketService {
     @Override
     public List<TicketDTO> getAllTickets() {
         return mapping.toTicketDTOList(repo.findAll());
+    }
+
+    @Override
+    public void updateTicket(TicketDTO ticketDTO) {
+        Ticket existingTicket = repo.getTicketByTicketNo(ticketDTO.getTicketNo());
+        existingTicket.setStatus(ticketDTO.getStatus());
+        repo.save(existingTicket);
     }
 }

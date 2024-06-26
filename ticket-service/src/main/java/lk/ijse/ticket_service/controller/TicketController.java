@@ -61,6 +61,22 @@ public class TicketController {
         return ResponseEntity.ok().body(allTickets);
     }
 
+    @PutMapping(value = "/update", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> updateTicket(@RequestBody TicketDTO ticketDTO) {
+        try {
+            validateTicket(ticketDTO);
+            if (!ticketService.existsByTicketNo(ticketDTO.getTicketNo())) {
+                logger.info("This Ticket is not exists.");
+                return ResponseEntity.badRequest().body("This Ticket is not exists.");
+            }
+            ticketService.updateTicket(ticketDTO);
+            logger.info(ticketDTO.getTicketNo()+" : ticket updated.");
+            return ResponseEntity.ok().body(ticketDTO.getTicketNo()+" : ticket updated.");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
     private void validateTicket(TicketDTO ticketDTO) {
         if (!Pattern.compile("^[T]-\\d{4}$").matcher(ticketDTO.getTicketNo()).matches()) {
             throw new RuntimeException("Invalid TicketNo");

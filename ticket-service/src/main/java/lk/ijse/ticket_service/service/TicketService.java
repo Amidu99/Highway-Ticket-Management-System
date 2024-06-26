@@ -8,4 +8,5 @@ public interface TicketService {
     void saveTicket(TicketDTO ticketDTO);
     TicketDTO getTicketByTicketNo(String ticketNo);
     List<TicketDTO> getAllTickets();
+    void updateTicket(TicketDTO ticketDTO);
 }
