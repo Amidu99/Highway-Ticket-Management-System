@@ -61,6 +61,14 @@ public class VehicleController {
         return ResponseEntity.ok().body(allVehicles);
     }
 
+    @GetMapping("/getAllByEmail")
+    public ResponseEntity<?> getAllVehiclesByEmail(@RequestParam String email) {
+        List<VehicleDTO> allVehicles = vehicleService.getAllVehiclesByEmail(email);
+        logger.info("No of all vehicles: "+allVehicles.size());
+        if (allVehicles.size() == 0) return ResponseEntity.noContent().build();
+        return ResponseEntity.ok().body(allVehicles);
+    }
+
     @PutMapping("/update")
     public ResponseEntity<?> updateVehicle(@RequestBody VehicleDTO vehicleDTO) {
         try {

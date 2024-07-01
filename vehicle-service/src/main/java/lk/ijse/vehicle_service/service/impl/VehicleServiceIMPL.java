@@ -48,4 +48,9 @@ public class VehicleServiceIMPL implements VehicleService {
     public void deleteVehicleByVehicleNo(String vehicleNo) {
         repo.deleteVehicleByVehicleNo(vehicleNo);
     }
+
+    @Override
+    public List<VehicleDTO> getAllVehiclesByEmail(String email) {
+        return mapping.toVehicleDTOList(repo.getAllVehiclesByOwnerEmail(email));
+    }
 }
