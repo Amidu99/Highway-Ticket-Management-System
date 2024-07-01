@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import java.util.Date;
 import java.util.Objects;
-import java.util.regex.Pattern;
 
 @RestController
 @RequiredArgsConstructor
@@ -45,27 +44,24 @@ public class PaymentController {
             ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.PUT, entity, String.class);
 
             if (response.getStatusCode() != HttpStatus.OK) {
-                paymentService.removePayment(paymentDTO.getTicketNo());
-                logger.info(paymentDTO.getTicketNo()+" : payment incomplete.");
-                return ResponseEntity.badRequest().body(paymentDTO.getTicketNo()+" : payment incomplete.");
+                paymentService.removePayment(paymentDTO.getId());
+                logger.info(paymentDTO.getId()+" : payment incomplete.");
+                return ResponseEntity.badRequest().body(paymentDTO.getId()+" : payment incomplete.");
             }
 
-            logger.info(paymentDTO.getTicketNo()+" : payment completed.");
-            return ResponseEntity.ok().body(paymentDTO.getTicketNo()+" : payment completed.");
+            logger.info(paymentDTO.getId()+" : payment completed.");
+            return ResponseEntity.ok().body(paymentDTO.getId()+" : payment completed.");
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
     private void validatePayment(PaymentDTO paymentDTO) {
-        if (!Pattern.compile("^[T]-\\d{4}$").matcher(paymentDTO.getTicketNo()).matches()) {
-            throw new RuntimeException("Invalid TicketNo");
-        }
         if (paymentDTO.getPayInfo().isEmpty()) {
             throw new RuntimeException("Invalid PayInfo");
         }
 
-        String url = "http://ticket-service/api/v1/ticket/get/"+paymentDTO.getTicketNo();
+        String url = "http://ticket-service/api/v1/ticket/get/"+paymentDTO.getId();
         HttpHeaders headers = new HttpHeaders();
         HttpEntity<String> entity = new HttpEntity<>(headers);
         ResponseEntity<TicketDTO> response = restTemplate.exchange(url, HttpMethod.GET, entity, TicketDTO.class);
@@ -74,7 +70,7 @@ public class PaymentController {
             throw new RuntimeException("No ticket found with this ticketNo.");
         }
         if (Objects.requireNonNull(response.getBody()).getStatus().equals(Status.PAID)) {
-            throw new RuntimeException(response.getBody().getTicketNo()+" : payment is already completed.");
+            throw new RuntimeException(response.getBody().getId()+" : payment is already completed.");
         }
         toPayTicket = response.getBody();
         logger.info("Ticket validated.");

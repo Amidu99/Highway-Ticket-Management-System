@@ -14,7 +14,8 @@ import java.util.Date;
 public class Payment {
     @Id
     private String paymentID;
-    private String ticketNo;
+    private String id;
+    private String email;
     private Date paidDate;
     private double amount;
     private String payInfo;

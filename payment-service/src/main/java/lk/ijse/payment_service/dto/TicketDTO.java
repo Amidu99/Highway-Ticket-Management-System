@@ -10,9 +10,10 @@ import java.util.Date;
 @NoArgsConstructor
 @Data
 public class TicketDTO implements SuperDTO {
-    private String ticketNo;
+    private String id;
     private Date issueDate;
     private Status status;
     private double fineAmount;
     private String vehicleNo;
+    private String email;
 }

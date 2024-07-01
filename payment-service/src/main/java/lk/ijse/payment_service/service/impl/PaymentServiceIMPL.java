@@ -19,7 +19,7 @@ public class PaymentServiceIMPL implements PaymentService {
     }
 
     @Override
-    public void removePayment(String ticketNo) {
-        repo.deleteByTicketNo(ticketNo);
+    public void removePayment(String id) {
+        repo.deleteById(id);
     }
 }
