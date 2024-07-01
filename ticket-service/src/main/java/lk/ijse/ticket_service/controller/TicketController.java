@@ -10,7 +10,6 @@ import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import java.util.List;
-import java.util.regex.Pattern;
 
 @RestController
 @RequiredArgsConstructor
@@ -30,26 +29,22 @@ public class TicketController {
     public ResponseEntity<?> saveTicket(@RequestBody TicketDTO ticketDTO) {
         try {
             validateTicket(ticketDTO);
-            if (ticketService.existsByTicketNo(ticketDTO.getTicketNo())) {
-                logger.info("This Ticket is already exists.");
-                return ResponseEntity.badRequest().body("This Ticket is already exists.");
-            }
             ticketService.saveTicket(ticketDTO);
-            logger.info(ticketDTO.getTicketNo()+" : ticket saved.");
-            return ResponseEntity.ok().body(ticketDTO.getTicketNo()+" : ticket saved.");
+            logger.info("Ticket saved.");
+            return ResponseEntity.ok().body("Ticket saved.");
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
-    @GetMapping("/get/{ticketNo}")
-    public ResponseEntity<?> getOneTicket(@PathVariable String ticketNo) {
-        boolean isExists = ticketService.existsByTicketNo(ticketNo);
+    @GetMapping("/get/{id}")
+    public ResponseEntity<?> getOneTicket(@PathVariable String id) {
+        boolean isExists = ticketService.existsById(id);
         if (!isExists){
-            logger.info(ticketNo + " : Ticket does not exist.");
+            logger.info(id + " : Ticket does not exist.");
             return ResponseEntity.noContent().build();
         }
-        TicketDTO ticketDTO = ticketService.getTicketByTicketNo(ticketNo);
+        TicketDTO ticketDTO = ticketService.getTicketById(id);
         return ResponseEntity.ok(ticketDTO);
     }
 
@@ -61,26 +56,27 @@ public class TicketController {
         return ResponseEntity.ok().body(allTickets);
     }
 
+    @GetMapping("/getAllPending")
+    public ResponseEntity<?> getAllPendingTickets(@RequestParam String email) {
+        List<TicketDTO> allPendingTickets = ticketService.getAllPendingTickets(email);
+        logger.info("No of all pending tickets: "+allPendingTickets.size());
+        if (allPendingTickets.size() == 0) return ResponseEntity.noContent().build();
+        return ResponseEntity.ok().body(allPendingTickets);
+    }
+
     @PutMapping(value = "/update", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> updateTicket(@RequestBody TicketDTO ticketDTO) {
+    public ResponseEntity<?> updateTicketStatus(@RequestBody TicketDTO ticketDTO) {
         try {
             validateTicket(ticketDTO);
-            if (!ticketService.existsByTicketNo(ticketDTO.getTicketNo())) {
-                logger.info("This Ticket is not exists.");
-                return ResponseEntity.badRequest().body("This Ticket is not exists.");
-            }
-            ticketService.updateTicket(ticketDTO);
-            logger.info(ticketDTO.getTicketNo()+" : ticket updated.");
-            return ResponseEntity.ok().body(ticketDTO.getTicketNo()+" : ticket updated.");
+            ticketService.updateTicketStatus(ticketDTO);
+            logger.info("Ticket status updated.");
+            return ResponseEntity.ok().body("Ticket status updated.");
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
     private void validateTicket(TicketDTO ticketDTO) {
-        if (!Pattern.compile("^[T]-\\d{4}$").matcher(ticketDTO.getTicketNo()).matches()) {
-            throw new RuntimeException("Invalid TicketNo");
-        }
         if (0 > ticketDTO.getFineAmount()) {
             throw new RuntimeException("Invalid Amount");
         }

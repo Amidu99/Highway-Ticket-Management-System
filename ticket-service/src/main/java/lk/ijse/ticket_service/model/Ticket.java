@@ -13,9 +13,10 @@ import java.util.Date;
 @Document(collection = "tickets")
 public class Ticket {
     @Id
-    private String ticketNo;
+    private String id;
     private Date issueDate;
     private Status status;
     private double fineAmount;
     private String vehicleNo;
+    private String email;
 }

@@ -16,18 +16,8 @@ public class TicketServiceIMPL implements TicketService {
     private final Mapping mapping;
 
     @Override
-    public boolean existsByTicketNo(String ticketNo) {
-        return repo.existsByTicketNo(ticketNo);
-    }
-
-    @Override
     public void saveTicket(TicketDTO ticketDTO) {
         repo.save(mapping.toTicketEntity(ticketDTO));
-    }
-
-    @Override
-    public TicketDTO getTicketByTicketNo(String ticketNo) {
-        return mapping.toTicketDTO(repo.getTicketByTicketNo(ticketNo));
     }
 
     @Override
@@ -36,9 +26,24 @@ public class TicketServiceIMPL implements TicketService {
     }
 
     @Override
-    public void updateTicket(TicketDTO ticketDTO) {
-        Ticket existingTicket = repo.getTicketByTicketNo(ticketDTO.getTicketNo());
+    public List<TicketDTO> getAllPendingTickets(String email) {
+        return mapping.toTicketDTOList(repo.getAllPendingTicketsByEmail(email));
+    }
+
+    @Override
+    public void updateTicketStatus(TicketDTO ticketDTO) {
+        Ticket existingTicket = repo.getTicketById(ticketDTO.getId());
         existingTicket.setStatus(ticketDTO.getStatus());
         repo.save(existingTicket);
+    }
+
+    @Override
+    public TicketDTO getTicketById(String id) {
+        return mapping.toTicketDTO(repo.getTicketById(id));
+    }
+
+    @Override
+    public boolean existsById(String id) {
+        return repo.existsById(id);
     }
 }
