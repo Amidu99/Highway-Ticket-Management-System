@@ -6,8 +6,6 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class AppConfig {
-    @Bean
-    public CORSConfig corsConfig() { return new CORSConfig(); }
 
     @Bean
     ModelMapper modelMapper(){
