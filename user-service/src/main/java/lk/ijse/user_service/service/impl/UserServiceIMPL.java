@@ -6,6 +6,7 @@ import lk.ijse.user_service.repo.UserRepo;
 import lk.ijse.user_service.service.UserService;
 import lk.ijse.user_service.util.Mapping;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
@@ -14,6 +15,7 @@ import java.util.List;
 public class UserServiceIMPL implements UserService {
     private final UserRepo repo;
     private final Mapping mapping;
+    private final BCryptPasswordEncoder encoder;
 
     @Override
     public boolean existsByEmail(String email) {
@@ -41,7 +43,7 @@ public class UserServiceIMPL implements UserService {
         existingUser.setName(userDTO.getName());
         existingUser.setAddress(userDTO.getAddress());
         existingUser.setPhone(userDTO.getPhone());
-        existingUser.setPassword(userDTO.getPassword());
+        existingUser.setPassword(encoder.encode(userDTO.getPassword()));
         repo.save(existingUser);
     }
 
