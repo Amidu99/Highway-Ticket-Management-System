@@ -5,8 +5,56 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="author" content="Amidu Shamika">
     <title>SignIn | SignUp</title>
+    <link rel="icon" href="../../assets/favicon.png" type="image/png" sizes="16x16">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-wordpress-admin/wordpress-admin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <link rel="stylesheet" href="./login-styles.css">
 </head>
 <body>
-
+<section id="process" class="login-process">
+    <div class="container" id="container">
+        <div class="form-container sign-up-form">
+            <form id="signUpForm">
+                <h1 class="heading">Create Account</h1>
+                <input id="signUp-name" type="text" placeholder="Enter Name">
+                <input id="signUp-email" type="email" placeholder="Enter Email">
+                <input id="signUp-phone" type="tel" placeholder="Enter Phone">
+                <input id="signUp-address" type="text" placeholder="Enter Address">
+                <input id="signUp-password" type="password" placeholder="Enter Password">
+                <input id="signUp-rePassword" type="password" placeholder="ReEnter Password">
+                <button id="signup-btn" type="button">SignUp</button>
+            </form>
+        </div>
+        <div class="form-container sign-in-form">
+            <form id="signInForm">
+                <h1 class="heading">Signin</h1>
+                <img class="logo" src="../../assets/images/logo.png" alt="Shoe Shop Logo" width="200px">
+                <input id="signIn-email" type="email" placeholder="Email">
+                <input id="signIn-password" type="password" placeholder="Password">
+                <a href="#">Forget Your Password?</a>
+                <button id="signin-btn" type="button">SignIn</button>
+            </form>
+        </div>
+        <div class="toggle-container">
+            <div class="toggle">
+                <div class="toggle-panel toggle-left-panel">
+                    <h1>Welcome Back!</h1>
+                    <p>Sign in now to handle your tickets with ease.</p>
+                    <button class="hidden" id="signInToggle">SignIn</button>
+                </div>
+                <div class="toggle-panel toggle-right-panel">
+                    <h1>Hi, Welcome!</h1>
+                    <p>Sign up today for a customized experience with ExpressTicket Pro, your premier ticket management solution!</p>
+                    <button class="hidden" id="signUpToggle">SignUp</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer id="footer"><p>©Copyright - All Right Reserved Designed by Amidu Shamika</p></footer>
+</section>
+<script src="../../assets/js/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2/dist/sweetalert2.min.js"></script>
+<script type="module" src="../../controller/login-controller.js"></script>
 </body>
 </html>
