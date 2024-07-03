@@ -5,9 +5,271 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="author" content="Amidu Shamika">
     <title>ExpressTicket Pro</title>
+    <link rel="icon" href="../../assets/favicon.png" type="image/png" sizes="16x16">
+    <link rel="stylesheet" href="../../assets/css/normalize.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-minimal@4/minimal.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/fontawesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <link rel="stylesheet" href="./dashboard-styles.css">
 </head>
 <body>
-
+<!--NavBar-->
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">ExpressTicket Pro</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"><i class="fas fa-bars"></i></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" href="#user-profile" id="user-profile-btn">My Profile</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#user-vehicles" id="user-vehicles-btn">My Vehicles</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#get-ticket" id="get-ticket-btn">Get Ticket</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#payments" id="payments-btn">Payments</a>
+                </li>
+            </ul>
+            <form class="d-flex">
+                <label id="current_user_name">Username</label>
+                <button class="btn btn-outline-warning" id="btn-logout" type="button">Logout</button>
+            </form>
+        </div>
+    </div>
+</nav>
+<!--User Profile-->
+<section id="user-profile" class="page-container">
+    <!--User Form-->
+    <section id="user_form_section" class="form_sections">
+        <h3><i class="fa-solid fa-user-shield fa-fade"></i> My Profile</h3><hr>
+        <form class="row g-3">
+            <div class="col col-xxl-4 col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12">
+                <input type="email" class="form-control" id="email" placeholder="Email" readonly>
+            </div>
+            <div class="col col-xxl-4 col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12">
+                <input type="text" class="form-control" id="name" placeholder="Name">
+            </div>
+            <div class="col col-xxl-4 col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12">
+                <input type="tel" class="form-control" id="phone" placeholder="Phone">
+            </div>
+            <div class="col col-xxl-4 col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12">
+                <input type="text" class="form-control" id="address" placeholder="Address">
+            </div>
+            <div class="col col-xxl-4 col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12">
+                <input type="password" class="form-control" id="password" placeholder="Password">
+            </div>
+            <div id="user_btns" class="mt-3 mb-4">
+                <button type="button" class="btn btn-primary">Update</button>
+                <button type="button" class="btn btn-warning"><i class="fa-solid fa-recycle fa-spin"></i></button>
+            </div>
+        </form>
+    </section>
+</section>
+<!--User Vehicles-->
+<section id="user-vehicles" class="page-container">
+    <!--Vehicle Form-->
+    <section id="vehicle_form_section" class="form_sections">
+        <h3><i class="fa-solid fa-truck-monster fa-flip"></i> My Vehicles</h3><hr>
+        <form class="row g-3">
+            <div class="col col-xxl-4 col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12">
+                <input type="text" class="form-control" id="vehicleNo" placeholder="Vehicle No">
+            </div>
+            <div class="col col-xxl-4 col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12">
+                <select id="make_select" class="form-select">
+                    <option selected value="0">- Select Make -</option>
+                    <option value="Audi">Audi</option>
+                    <option value="BMW">BMW</option>
+                    <option value="Toyota">Toyota</option>
+                    <option value="Nissan">Nissan</option>
+                    <option value="Honda">Honda</option>
+                    <option value="Mitsubishi">Mitsubishi</option>
+                    <option value="Suzuki">Suzuki</option>
+                    <option value="Hyundai">Hyundai</option>
+                    <option value="Kia">Kia</option>
+                    <option value="Mazda">Mazda</option>
+                    <option value="Subaru">Subaru</option>
+                    <option value="Volkswagen">Volkswagen</option>
+                    <option value="Peugeot">Peugeot</option>
+                    <option value="Renault">Renault</option>
+                    <option value="Daihatsu">Daihatsu</option>
+                    <option value="Isuzu">Isuzu</option>
+                    <option value="Tata">Tata</option>
+                    <option value="Mercedes-Benz">Mercedes-Benz</option>
+                    <option value="Jaguar">Jaguar</option>
+                    <option value="Land Rover">Land Rover</option>
+                    <option value="MG">MG</option>
+                    <option value="Fiat">Fiat</option>
+                    <option value="Hino">Hino</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+            <div class="col col-xxl-4 col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12">
+                <select id="type_select" class="form-select">
+                    <option selected value="0">- Select Type -</option>
+                    <option value="Car">Car</option>
+                    <option value="Van">Van</option>
+                    <option value="SUV">SUV</option>
+                    <option value="Truck">Truck</option>
+                    <option value="Bus">Bus</option>
+                    <option value="Pickup">Pickup</option>
+                    <option value="Minivan">Minivan</option>
+                    <option value="Coupe">Coupe</option>
+                    <option value="Hatchback">Hatchback</option>
+                    <option value="Sedan">Sedan</option>
+                    <option value="Wagon">Wagon</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+            <div class="col col-xxl-4 col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12">
+                <input type="text" class="form-control" id="model" placeholder="Model">
+            </div>
+            <div id="vehicle_btns" class="mt-3 mb-4">
+                <button type="button" class="btn btn-success">Save</button>
+                <button type="button" class="btn btn-primary">Update</button>
+                <button type="button" class="btn btn-danger">Delete</button>
+                <button type="button" class="btn btn-warning"><i class="fa-solid fa-recycle fa-spin"></i></button>
+            </div>
+        </form>
+    </section>
+    <!--Vehicle Table-->
+    <section id="vehicle_table_section" class="table_section">
+        <div class="col col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+            <table class="table table-info table-sm table-hover table-borderless">
+                <thead>
+                <tr>
+                    <th scope="col">Vehicle No</th>
+                    <th scope="col">Make</th>
+                    <th scope="col">Type</th>
+                    <th scope="col">Model</th>
+                </tr>
+                </thead>
+                <tbody id="vehicle_tbl_body">
+                </tbody>
+            </table>
+        </div>
+    </section>
+</section>
+<!--Get Ticket-->
+<section id="get-ticket" class="page-container">
+    <section id="ticket_form_section" class="form_sections">
+        <h3><i class="fa-solid fa-ticket fa-bounce"></i> Get Ticket</h3><hr>
+        <form class="row g-3">
+            <div class="col col-xxl-4 col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12">
+                <select id="vehicle-select" class="form-select">
+                    <option value="0" selected>- Set Vehicle -</option>
+                </select>
+            </div>
+            <div class="col col-xxl-4 col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12">
+                <select id="entrance-select" class="form-select">
+                    <option value="0" selected>- Set Entrance -</option>
+                    <option value="5">Kahathuduwa</option>
+                    <option value="15">Gelanigama</option>
+                    <option value="35">Dodangoda</option>
+                    <option value="45">Welipanna</option>
+                    <option value="65">Pinnaduwa</option>
+                    <option value="80">Imaduwa</option>
+                    <option value="95">Kokmaduwa</option>
+                    <option value="110">Godagama</option>
+                    <option value="115">Kapuduwa</option>
+                    <option value="125">Aparekka</option>
+                    <option value="135">Beliatta</option>
+                    <option value="150">Kasagala</option>
+                    <option value="165">Angunukolapelessa</option>
+                    <option value="175">Barawakubuka</option>
+                    <option value="180">Sooriyawewa</option>
+                    <option value="190">Andarawewa</option>
+                    <option value="200">Mattala</option>
+                </select>
+            </div>
+            <div class="col col-xxl-4 col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12">
+                <select id="departure-select" class="form-select">
+                    <option value="0" selected>- Set Departure -</option>
+                    <option value="5">Kahathuduwa</option>
+                    <option value="15">Gelanigama</option>
+                    <option value="35">Dodangoda</option>
+                    <option value="45">Welipanna</option>
+                    <option value="65">Pinnaduwa</option>
+                    <option value="80">Imaduwa</option>
+                    <option value="95">Kokmaduwa</option>
+                    <option value="110">Godagama</option>
+                    <option value="115">Kapuduwa</option>
+                    <option value="125">Aparekka</option>
+                    <option value="135">Beliatta</option>
+                    <option value="150">Kasagala</option>
+                    <option value="165">Angunukolapelessa</option>
+                    <option value="175">Barawakubuka</option>
+                    <option value="180">Sooriyawewa</option>
+                    <option value="190">Andarawewa</option>
+                    <option value="200">Mattala</option>
+                </select>
+            </div>
+            <div class="col col-xxl-4 col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12">
+                <input type="number" class="form-control" id="fine-amount" placeholder="Fine Amount" readonly>
+            </div>
+            <div id="ticket_btns" class="mt-3 mb-4">
+                <button type="button" class="btn btn-success">Get Ticket</button>
+                <button type="button" class="btn btn-warning"><i class="fa-solid fa-recycle fa-spin"></i></button>
+            </div>
+        </form>
+    </section>
+</section>
+<!--Payments-->
+<section id="payments" class="page-container">
+    <section id="payment_form_section" class="form_sections">
+        <h3><i class="fa-solid fa-money-check-dollar fa-beat-fade"></i> Payments</h3><hr>
+        <form class="row g-3">
+            <div class="col col-xxl-4 col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12">
+                <label for="ticket-select" class="form-label">Pending for payment</label>
+                <select id="ticket-select" class="form-select">
+                    <option value="0" selected>- Set Ticket -</option>
+                </select>
+            </div>
+            <div class="col col-xxl-4 col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12">
+                <label for="amount" class="form-label">Amount to be paid</label>
+                <input type="number" class="form-control" id="amount" placeholder="Amount" readonly>
+            </div>
+            <div class="col col-xxl-4 col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12">
+                <label for="bank-select" class="form-label">Select the Bank</label>
+                <select id="bank-select" class="form-select">
+                    <option value="0" selected>- Select Bank -</option>
+                    <option value="BOC">Bank of Ceylon (BOC)</option>
+                    <option value="COMB">Commercial Bank (COMB)</option>
+                    <option value="HNB">Hatton National Bank (HNB)</option>
+                    <option value="DFCC">DFCC Bank (DFCC)</option>
+                    <option value="NDB">National Development Bank (NDB)</option>
+                    <option value="NTB">Nations trust Bank (NTB)</option>
+                    <option value="SEYB">Seylan Bank (SEYB)</option>
+                    <option value="SAMP">Sampath Bank (SAMP)</option>
+                </select>
+            </div>
+            <div class="col col-xxl-4 col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12">
+                <label for="card_digits" class="form-label">Last 4 Digits of Card</label>
+                <input type="number" class="form-control" id="card_digits">
+            </div>
+            <div id="payment_btns" class="mt-3 mb-4">
+                <button type="button" class="btn btn-success">Pay</button>
+                <button type="button" class="btn btn-warning"><i class="fa-solid fa-recycle fa-spin"></i></button>
+            </div>
+        </form>
+    </section>
+</section>
 <footer id="footer"><p>©Copyright - All Right Reserved Designed by Amidu Shamika</p></footer>
+<script src="../../assets/js/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/print-js/1.6.0/print.js" integrity="sha512-/fgTphwXa3lqAhN+I8gG8AvuaTErm1YxpUjbdCvwfTMyv8UZnFyId7ft5736xQ6CyQN4Nzr21lBuWWA9RTCXCw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/js/all.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script type="module" src="../../controller/dashboard-controller.js"></script>
+<script type="module" src="../../controller/payment-controller.js"></script>
+<script type="module" src="../../controller/ticket-controller.js"></script>
+<script type="module" src="../../controller/user-controller.js"></script>
+<script type="module" src="../../controller/vehicle-controller.js"></script>
 </body>
 </html>
